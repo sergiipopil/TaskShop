@@ -47,6 +47,7 @@ namespace TaskShop.Classes
                     if (productExist.Count > productCount)
                     {
                         productExist.Count -= productCount;
+                        Console.WriteLine($"Total price of {productCount} cnt of {productExist.Title} is {productExist.PricePerKg*productCount}");
                         Console.WriteLine("Success!");
                     }
                     else
