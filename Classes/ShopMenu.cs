@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 using TaskShop.Enums;
 
 namespace TaskShop.Classes
-{    
+{
     public class ShopMenu
-    {        
+    {
         public Product product = new Product();
-        public ShopMenu() {
+        public ShopMenu()
+        {
             InitProductList();
             MainMenu();
         }
         private void InitProductList()
         {
-            product.ProductList = new List<Product>() 
+            product.ProductList = new List<Product>()
             {
                 new Product() { Id = 1, Title = "Bread", Count = 25, PricePerKg = 25.3m },
                 new Product() { Id = 2, Title = "Milk", Count = 30, PricePerKg = 52.5m },
@@ -98,12 +99,7 @@ namespace TaskShop.Classes
                         break;
                     case SellerMode.GetAllItems:
                         //todo
-                        var list = product.GetProductsList();
-                        foreach (var item in list)
-                        {
-                            Console.WriteLine($"ID: {item.Id}\tTitle: {item.Title}\tCount: {item.Count}\t PricePerKg:{item.PricePerKg}");
-                        }
-                        Console.WriteLine();
+                        product.ShowProductsList();                        
                         SellerMenu();
                         break;
                     case SellerMode.ItemDetails:
@@ -139,7 +135,20 @@ namespace TaskShop.Classes
                         break;
                     case BuyerMode.BuyItem:
                         //todo
-                        Console.WriteLine("Buy item");
+                        product.ShowProductsList();
+                        Console.Write("Please enter Id of product which you want buy:");
+                        bool isCorrectId = int.TryParse(Console.ReadLine(), out int productId);
+                        if (isCorrectId)
+                        {
+                            Console.Write("Enter items or kg do you want buy:");
+                            bool isCorrectCount = int.TryParse(Console.ReadLine(), out int productCount);
+                            if (isCorrectCount)
+                            {
+                                product.SoldProduct(productId, productCount);                                
+                            }
+                        }
+                        product.ShowProductsList();
+                        Console.WriteLine();
                         break;
                     case BuyerMode.ReturnItem:
                         //todo
@@ -151,12 +160,7 @@ namespace TaskShop.Classes
                         break;
                     case BuyerMode.GetAllItems:
                         //todo
-                        var list = product.GetProductsList();
-                        foreach (var item in list)
-                        {
-                            Console.WriteLine($"ID: {item.Id}\tTitle: {item.Title}\tCount: {item.Count}\tPricePerKg: {item.PricePerKg}");
-                        }
-                        Console.WriteLine();
+                        product.ShowProductsList();                        
                         BuyerMenu();
                         break;
                 }
