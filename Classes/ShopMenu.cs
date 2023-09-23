@@ -6,17 +6,33 @@ using System.Threading.Tasks;
 using TaskShop.Enums;
 
 namespace TaskShop.Classes
-{
-    public static class ShopMenu
-    {
-        public static void MainMenu()
+{    
+    public class ShopMenu
+    {        
+        public Product product = new Product();
+        public ShopMenu() {
+            InitProductList();
+            MainMenu();
+        }
+        private void InitProductList()
+        {
+            product.ProductList = new List<Product>() 
+            {
+                new Product() { Id = 1, Title = "Bread", Count = 25, PricePerKg = 25.3m },
+                new Product() { Id = 2, Title = "Milk", Count = 30, PricePerKg = 52.5m },
+                new Product() { Id = 3, Title = "Cheese", Count = 45, PricePerKg = 247.8m },
+                new Product() { Id = 4, Title = "Sausage", Count = 20, PricePerKg = 195 },
+                new Product() { Id = 5, Title = "Potato", Count = 120, PricePerKg = 35 }
+            };
+        }
+        public void MainMenu()
         {
             Console.Clear();
             Console.WriteLine("You are welcome to Codozavrs shop\n");
             Console.WriteLine("Main menu:\n\n" +
+                "Press 0 - EXIT\n" +
                 "Press 1 - seller mode\n" +
-                "Press 2 - buyer mode\n" +
-                "Press 0 - EXIT\n");
+                "Press 2 - buyer mode\n");
             Console.Write("Select menu item:");
             bool isCorrectMode = Enum.TryParse(Console.ReadLine(), out AppMode modeType);
 
@@ -43,7 +59,7 @@ namespace TaskShop.Classes
                 }
             }
         }
-        public static void SellerMenu()
+        public void SellerMenu()
         {
             Console.WriteLine("It`s seller mode");
             Console.WriteLine("Seller menu:\n\n" +
@@ -82,7 +98,13 @@ namespace TaskShop.Classes
                         break;
                     case SellerMode.GetAllItems:
                         //todo
-                        Console.WriteLine("Get all items");
+                        var list = product.GetProductsList();
+                        foreach (var item in list)
+                        {
+                            Console.WriteLine($"ID: {item.Id}\tTitle: {item.Title}\tCount: {item.Count}\t PricePerKg:{item.PricePerKg}");
+                        }
+                        Console.WriteLine();
+                        SellerMenu();
                         break;
                     case SellerMode.ItemDetails:
                         //todo
@@ -91,7 +113,7 @@ namespace TaskShop.Classes
                 }
             }
         }
-        public static void BuyerMenu()
+        public void BuyerMenu()
         {
             Console.WriteLine("It`s buyer mode");
             Console.WriteLine("Buyer menu:\n\n" +
@@ -129,7 +151,13 @@ namespace TaskShop.Classes
                         break;
                     case BuyerMode.GetAllItems:
                         //todo
-                        Console.WriteLine("Get all items");
+                        var list = product.GetProductsList();
+                        foreach (var item in list)
+                        {
+                            Console.WriteLine($"ID: {item.Id}\tTitle: {item.Title}\tCount: {item.Count}\tPricePerKg: {item.PricePerKg}");
+                        }
+                        Console.WriteLine();
+                        BuyerMenu();
                         break;
                 }
             }

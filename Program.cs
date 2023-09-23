@@ -1,7 +1,7 @@
 ﻿
 using TaskShop.Classes;
 
-ShopMenu.MainMenu();
+ShopMenu shopMenu = new ShopMenu();
 
 /*
 List<Product> productList = new List<Product>();
